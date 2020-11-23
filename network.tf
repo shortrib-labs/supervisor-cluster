@@ -35,6 +35,13 @@ resource "vsphere_vnic" "workload" {
     ip = cidrhost("10.16.0.0/24", 200+((count.index+1)*10))
     netmask = "255.255.255.0"
   }
+
+  ipv6 {
+    addresses  = []
+    autoconfig = false
+    dhcp       = false
+  }
+
   netstack = "defaultTcpipStack"
 }
 
@@ -51,9 +58,17 @@ resource "vsphere_vnic" "load_balancer" {
   host                    = local.host_ids[count.index]
   distributed_switch_port = data.vsphere_distributed_virtual_switch.homelab.id
   distributed_port_group  = vsphere_distributed_port_group.load_balancer.id
+
   ipv4 {
     ip = cidrhost("10.24.0.0/24", 200+((count.index+1)*10))
     netmask = "255.255.255.0"
   }
+
+  ipv6 {
+    addresses  = []
+    autoconfig = false
+    dhcp       = false
+  }
+
   netstack = "defaultTcpipStack"
 }
