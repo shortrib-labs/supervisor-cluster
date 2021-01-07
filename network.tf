@@ -46,7 +46,7 @@ resource "vsphere_vnic" "workload" {
 }
 
 resource "vsphere_distributed_port_group" "load_balancer" {
-  name                            = "load-balancer-pg"
+  name                            = "frontend-pg"
   distributed_virtual_switch_uuid = data.vsphere_distributed_virtual_switch.homelab.id
 
   vlan_id = 104
